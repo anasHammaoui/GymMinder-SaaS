@@ -1,6 +1,15 @@
 @extends("layouts.authLayout")
 @section("authpage")
+
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
+    @if (session('message'))
+    <div class="mb-4 rounded bg-green-100 border border-green-400 text-green-700 px-4 py-3 text-center">
+        <svg class="inline w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+        {{ session('message') }}
+    </div>
+@endif
     <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
         <div class="flex flex-col items-center">
             <svg class="w-16 h-16 text-blue-500 mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

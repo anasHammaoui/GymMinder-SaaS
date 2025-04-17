@@ -1,7 +1,7 @@
 @extends("Layouts.authLayout")
 @section("authpage")
 <div class="flex min-h-screen">
-    <!-- Left Section - Sign Up Form -->
+    <!-- Left Section - reset password Form -->
     <div class="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
         <div class="w-full max-w-md">
             <h2 class="text-2xl font-bold mb-8 text-gray-900">Reset Password Page</h2>
@@ -14,6 +14,11 @@
                     </ul>
                 </div>
             @endif
+            @if (session('status'))
+            <div class="mb-4 rounded-md bg-green-100 border border-green-400 text-green-700 px-4 py-3 text-sm">
+                {{ session('status') }}
+            </div>
+        @endif
             <form class="space-y-6" method="POST" action="{{ route('password.update') }}">
                 @csrf
                    <!-- Email -->

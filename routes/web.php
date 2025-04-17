@@ -11,17 +11,9 @@ Route::get('/', function () {
     return view('dashboard');
 }) -> name("dashboard");
 // ******************auth routes views*************
-Route::get('/register',[AuthController::class,"showRegister"])->name('register');
+Route::get('/register',[AuthController::class,"showRegister"])->middleware("guest")->name('register');
 
-Route::get('/login', [AuthController::class,"showLogin"])->name('login');
-
-Route::get('/forgetpassword', function () {
-    return view('auth.forgetPassword');
-})->name('forget');
-
-Route::get('/resetpassword', function () {
-    return view('auth.resetPassword');
-})->name('reset');
+Route::get('/login', [AuthController::class,"showLogin"])->middleware("guest")->name('login');
 
 //  *********************** auth routes backend********************
 Route::post('/auth/register', [AuthController::class, 'register'])->name('auth.register');

@@ -20,22 +20,13 @@ class AuthController extends Controller
         'password' => 'required|string|min:8',
     ]);
     $users = User::count();
-    $user = null;
-        if ($users == 0){
-            $user = User::create([
-                'name' => $request-> name,
-                'email' => $request-> email,
-                'password' => Hash::make($request-> password),
-                "role" => "admin"
-            ]);
-        } else {
-            $user = User::create([
-               'name' => $request-> name,
-                'email' => $request-> email,
-                'password' => Hash::make($request-> password),
-                "role" => "owner"
-            ]);
-        }
+    $role = $users == 0 ? 'admin' : 'owner';
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $role
+    ]);
         $user->sendEmailVerificationNotification();
     Auth::login($user);
     return redirect()-> route('verification.notice');
@@ -53,6 +44,7 @@ class AuthController extends Controller
         $request -> session() -> regenerate();
         return redirect()->intended('/dashboard');
     }
+    return redirect() -> back() -> withErrors(["user" =>"The provided credentials do not match our records"]);
    }
    public function logout(Request $request){
     Auth::logout();

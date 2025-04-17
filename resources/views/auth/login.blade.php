@@ -1,11 +1,33 @@
 @extends("Layouts.authLayout")
 @section("authpage")
+
 <div class="flex min-h-screen">
-    <!-- Left Section - Sign Up Form -->
+    <!-- Left Section - Login Form -->
     <div class="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
         <div class="w-full max-w-md">
             <h2 class="text-2xl font-bold mb-8 text-gray-900">Login Page</h2>
-            
+            @if (session('success'))
+            <div class="mb-4 rounded bg-green-100 border border-green-400 text-green-700 px-4 py-3 text-center">
+                <svg class="inline w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('status'))
+        <div class="mb-4 rounded-md bg-green-100 border border-green-400 text-green-700 px-4 py-3 text-sm">
+            {{ session('status') }}
+        </div>
+    @endif
+            @if ($errors->any())
+            <div class="mb-4">
+                <ul class="list-disc list-inside text-sm text-red-600">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
             <form class="space-y-6" method="POST" action="{{ route("auth.login") }}">
                 @csrf
                 <!-- Email -->
