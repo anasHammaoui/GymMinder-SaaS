@@ -5,7 +5,15 @@
     <div class="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
         <div class="w-full max-w-md">
             <h2 class="text-2xl font-bold mb-8 text-gray-900">Join To GymMinder</h2>
-            
+            @if ($errors->any())
+            <div class="mb-4">
+                <ul class="list-disc list-inside text-sm text-red-600">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
             <form class="space-y-6" method="POST" action="{{ route('auth.register') }}">
                 @csrf
                 
