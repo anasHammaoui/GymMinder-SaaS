@@ -6,7 +6,7 @@
         <div class="w-full max-w-md">
             <h2 class="text-2xl font-bold mb-8 text-gray-900">Forget Password Page</h2>
             
-            <form class="space-y-6">
+            <form class="space-y-6" method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <!-- Email -->
                 <div>
@@ -17,8 +17,8 @@
                 </div>
                 <!-- Submit Button -->
                 <div>
-                    <button type="button" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Login
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Reset Password
                     </button>
                 </div>
             </form>
