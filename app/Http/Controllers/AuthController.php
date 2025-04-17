@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // register
+    public function showRegister(){
+        return view('auth.signUp');
+    }
    public function register(Request $request){
     $request -> validate([
         'name' => 'required|string|max:255',
@@ -16,7 +20,6 @@ class AuthController extends Controller
         'password' => 'required|string|min:8',
     ]);
     $users = User::count();
-    // dd($users);
     $user = null;
         if ($users == 0){
             $user = User::create([
@@ -33,9 +36,28 @@ class AuthController extends Controller
                 "role" => "owner"
             ]);
         }
-        // $user->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
     Auth::login($user);
-    return redirect()-> route('dashboard') -> withSuccess("You've been registred with success");
+    return redirect()-> route('verification.notice');
    }
-   
+//    login 
+    public function showLogin(){
+        return view('auth.login');
+    }
+   public function login(Request $request){
+   $data =  $request -> validate([
+        "email" => "required|email",
+        "password" => "required|string"
+    ]);
+    if (Auth::attempt($data)){
+        $request -> session() -> regenerate();
+        return redirect()->intended('/dashboard');
+    }
+   }
+   public function logout(Request $request){
+    Auth::logout();
+    $request-> session() -> invalidate();
+    $request -> session() -> regenerateToken();
+    return redirect() -> route('login') -> withSuccess("You've been logged out");
+   }
 }
