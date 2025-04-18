@@ -10,12 +10,13 @@
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <title>GymMinder - Home</title>
     @vite("resources/css/app.css")
     <style>
@@ -82,17 +83,17 @@
     </div>
     <!-- Hero Section -->
     <section id="home" class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4  md:px-8 lg:px-[170px] py-16">
-        <div class="max-w-xl text-white">
+        <div data-aos="fade-right" class="max-w-xl text-white">
             <h1 class="text-4xl md:text-5xl font-bold mb-2 outfit">Effortless Gym <br>Management with <span class="text-blue-500">GYM <br>MINDER!</span></h1>
             <p class="mb-8 text-gray-300">Simplify memberships, streamline operations, payments, and <br>grow your gym with ease.</p>
             <a href="/register" class="bg-blue-500 text-white px-8 py-3 rounded-full font-medium shadow hover:bg-blue-600 transition">Get Started Now</a>
         </div>
-        <div class="mt-10 md:mt-0">
+        <div data-aos="fade-left class="mt-10 md:mt-0">
             <img src="{{ asset('assets/images/dashboard.jpg') }}" alt="GymMinder Dashboard" class="w-full max-w-md rounded-lg shadow-lg border border-gray-700">
         </div>
     </section>
     <!-- Features Section -->
-    <section id="benefits" class="py-16 lg:pb-2 bg-[#030410] lg:relative">
+    <section data-aos="fade-up" id="benefits" class="py-16 lg:pb-2 bg-[#030410] lg:relative">
         <div class="container mx-auto px-4 md:px-8 lg:px-[170px] lg:absolute z-20">
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Membership Management Card -->
@@ -153,10 +154,10 @@
     <!-- Why Choose Section -->
     <section id="testimonials" class="container mx-auto py-8 md:py-0 px-4 md:px-8 lg:px-[170px]">
         <div class="flex flex-col md:flex-row gap-16 items-center">
-            <div class="flex-1">
+            <div data-aos="fade-right" class="flex-1">
                 <img src="{{ asset('assets/images/LogoWhite.png') }}" alt="GymMinder Mascot" class="w-full max-w-md mx-auto">
             </div>
-            <div class="flex-1 text-white">
+            <div data-aos="fade-left" class="flex-1 text-white">
                 <h2 class="text-2xl md:text-4xl font-bold text-white mb-12 ">Why Choose <span class="text-blue-500">GYM MINDER</span>?</h2>
                 <ul class="space-y-4">
                     <li class="flex items-start">
@@ -180,10 +181,10 @@
     <!-- Testimonials Section -->
     <section id="testimonials" class="py-16 bg-[#030410]" style="background-image: url('{{ asset('assets/images/bg.png') }}'); background-size: cover; background-position: center;">
         <div class="container mx-auto px-4 md:px-8 lg:px-[170px]">
-            <h2 class="text-3xl font-bold text-white mb-2 text-center">What Our Clients Say</h2>
-            <p class="text-gray-400 text-center mb-12">Discover What Does Our Proud Clients Say About Us</p>
+            <h2 data-aos="fade-up" class="text-3xl font-bold text-white mb-2 text-center">What Our Clients Say</h2>
+            <p data-aos="fade-up" class="text-gray-400 text-center mb-12">Discover What Does Our Proud Clients Say About Us</p>
             
-            <div class="swiper testimonials-swiper pb-12 cursor-grab">
+            <div data-aos="fade-up" class="swiper testimonials-swiper pb-12 cursor-grab">
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
                     <!-- First testimonial -->
@@ -286,15 +287,15 @@
         <div class="container mx-auto px-4 md:px-8 lg:px-[170px]">
                         
             <div class="text-center mt-16">
-                <h3 class="text-3xl font-bold text-white mb-4 md:w-1/2 mx-auto">What are you waiting <span class="text-blue-500">Join Now</span> and make your business go to the moon!</h3>
-                <a href="/register" class="inline-block bg-blue-500 text-white px-8 py-3  font-medium mt-4 hover:bg-blue-600 transition rounded-full">Join Now</a>
+                <h3 data-aos="fade-up" class="text-3xl font-bold text-white mb-4 md:w-1/2 mx-auto">What are you waiting <span class="text-blue-500">Join Now</span> and make your business go to the moon!</h3>
+                <a data-aos="fade-up" href="/register" class="inline-block bg-blue-500 text-white px-8 py-3  font-medium mt-4 hover:bg-blue-600 transition rounded-full">Join Now</a>
             </div>
             <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="flex-1">
+                <div data-aos="fade-right" class="flex-1">
                     <img src="{{ asset('assets/images/LogoWhite.png') }}" alt="GymMinder Mascot" class="w-full max-w-md mx-auto">
                 </div>
                 
-                <div class="md:w-1/2 text-white">
+                <div data-aos="fade-left" class="md:w-1/2 text-white">
                     <h2 class="text-3xl font-bold mb-8">Simple & Affordable Pricing!</h2>
                     
                     <ul class="space-y-4">
@@ -318,7 +319,7 @@
     <footer class="bg-[#030410] py-8 mt-auto border-t-1 border-indigo-400">
         <div class="container mx-auto px-4 md:px-8 lg:px-[170px]">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-around">
-                <div class="mb-6 md:mb-0 ">
+                <div data-aos="fade-up" class="mb-6 md:mb-0 ">
                     <img src="{{ asset('assets/images/LogoWhite.png') }}" alt="GymMinder Logo" class="h-16 mx-auto">
                     <p class="text-gray-300 mt-4 max-w-md">
                         Gym Minder is an all-in-one platform for effortless gym management, helping gym owners streamline operations and boost member engagement.
@@ -328,7 +329,7 @@
                     </div>
                 </div>
                 
-                <div class="flex flex-col items-start">
+                <div data-aos="fade-up" class="flex flex-col items-start">
                     <h3 class="text-white mb-4 text-lg">Home</h3>
                     <ul class="space-y-2">
                         <li><a href="#benefits" class="text-gray-400 hover:text-white">Benefits</a></li>
@@ -337,7 +338,7 @@
                     </ul>
                 </div>
                 
-                <div class="mt-6 md:mt-0">
+                <div data-aos="fade-up" class="mt-6 md:mt-0">
                     <h3 class="text-white mb-4 text-lg">Social Media</h3>
                     <div class="flex space-x-3">
                         <a href="#" class="bg-blue-500 hover:bg-blue-700 p-2 rounded-full flex items-center justify-center w-10 h-10">
@@ -359,6 +360,7 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // toggle navbar 
         document.addEventListener('DOMContentLoaded', function() {
@@ -403,6 +405,9 @@
                         }
                     });
                 });
+                // aos animation
+         
+  AOS.init();
     </script>
 </body>
 </html>
