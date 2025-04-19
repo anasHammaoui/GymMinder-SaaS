@@ -1,15 +1,19 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\EmailVerifyController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+// home page
 Route::get('/', function () {
     return view('home');
 }) -> name("home");
+// dashboard
+Route::get("/dashboard",[dashboardController::class,"index"]) -> middleware("auth") -> name("dashboard");
 // ******************auth routes views*************
 Route::get('/register',[AuthController::class,"showRegister"])->middleware("guest")->name('register');
 
