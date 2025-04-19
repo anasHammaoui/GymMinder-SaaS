@@ -1,5 +1,5 @@
-@extends("layouts.authLayout")
-@section("authpage")
+@extends("layouts.mainLayout")
+@section("content")
 
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
     @if (session('message'))

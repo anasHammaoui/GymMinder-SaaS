@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('dashboard');
-}) -> name("dashboard");
+    return view('home');
+}) -> name("home");
 // ******************auth routes views*************
 Route::get('/register',[AuthController::class,"showRegister"])->middleware("guest")->name('register');
 

@@ -1,5 +1,5 @@
-@extends("Layouts.authLayout")
-@section("authpage")
+@extends("Layouts.mainLayout")
+@section("content")
 <div class="flex min-h-screen">
     <!-- Left Section - Sign Up Form -->
     <div class="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">

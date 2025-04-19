@@ -1,5 +1,5 @@
-@extends("Layouts.authLayout")
-@section("authpage")
+@extends("Layouts.mainLayout")
+@section("content")
 
 <div class="flex min-h-screen">
     <!-- Left Section - Login Form -->
