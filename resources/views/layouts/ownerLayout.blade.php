@@ -26,8 +26,14 @@
         <!-- Sidebar Header -->
         <div class="pt-6 px-4">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gray-700 rounded-full"></div>
-                <span class="text-[17px] font-semibold text-gray-800">Gym Owner</span>
+                @if(auth()->user()->profile_pic)
+                    <img src="{{ Storage::url(auth()->user()->profile_pic) }}" alt="Profile Photo" class="w-10 h-10 rounded-full object-cover">
+                @else
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 font-bold">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                @endif
+                <span class="text-[17px] font-semibold text-gray-800">{{ auth() -> user() -> name }}</span>
             </div>
         </div>
 
@@ -111,6 +117,25 @@
     </div>
 
     <!-- Main Content -->
+    <div id="main-content" class="md:ml-[245px] transition-all duration-300 ease-in-out">
+        <!-- Header -->
+        <nav class="flex px-4 md:px-12 items-center justify-between p-4 border-b border-gray-300 my-4 bg-white">
+            <!-- Left side: Breadcrumb -->
+            <div class="text-gray-500">
+                <span class="font-semibold">{{ $page }}</span> / <span>Default</span>
+            </div>
+    
+            <!-- Right side: Icons -->
+            <div class="flex items-center space-x-4">
+               <!-- Logout Button -->
+               <form method="POST" action="{{ route('auth.logout') }}" class="hidden md:block">
+                @csrf
+                <button type="submit" class="flex cursor-pointer items-center">
+                  <img src="{{ asset('assets/images/sidebar/logout.png') }}" alt="logout">
+                </button>
+            </form>
+            </div>
+        </nav>    
     @yield('content')
 {{-- scripts --}}
     @yield('scripts')
