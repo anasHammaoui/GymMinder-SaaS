@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthMiddleware
+class OwnerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()){
+        if (Auth::check() && Auth::user() -> role === "owner"){
             return $next($request);
         }
-        return redirect("/login")->withErrors(["Please Login first"]);
+        return redirect('/unauthorized');
     }
 }

@@ -1,6 +1,7 @@
 @extends("layouts.ownerLayout")
 {{-- dashboard content --}}
 @section('content')
+<h2 class="px-4 md:px-12 font-semibold text-lg text-gray-800 mb-4">Statistics</h2>
     <!-- Statistics Section -->
     <div class="grid px-4 md:px-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <!-- Total Members -->

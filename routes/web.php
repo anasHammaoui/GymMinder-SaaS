@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\EmailVerifyController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 }) -> name("home");
+// unauthorized
+Route::get("/unauthorized", function(){return view("unauthorized");});
 // dashboard
 Route::get("/dashboard",[dashboardController::class,"index"]) -> middleware("auth") -> name("dashboard");
 // ******************auth routes views*************
@@ -35,3 +38,5 @@ Route::get("/forgot-password",[ResetPasswordController::class, "showForgotPasswo
 Route::post('/forgot-password',[ResetPasswordController::class,"sendLink"])->middleware('guest')->name('password.email');
 Route::get('/reset-password/{token}', [ResetPasswordController::class, "resetForm"])->middleware('guest')->name('password.reset');
 Route::post('/reset-password',[ResetPasswordController::class, "resetPassword"])->middleware('guest')->name('password.update');
+//********************* * members routes*****************
+Route::get('/owner/members',[MemberController::class, "index"]) -> middleware(['auth','owner']);

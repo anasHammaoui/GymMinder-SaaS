@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\GuestMiddleware;
+use App\Http\Middleware\OwnerMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware -> alias([
             "auth" => AuthMiddleware::class,
             'guest'=> GuestMiddleware::class,
+            'owner' => OwnerMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -40,73 +40,86 @@
         <!-- Navigation Items -->
         <nav class="flex-1">
             <ul class="space-y-1 px-4 mt-4">
-                <li>
-                    <a href="#" class="flex items-center space-x-3 py-2 px-4 bg-gray-100 rounded-lg text-gray-800 font-medium">
-                        <img src="{{ asset('assets/images/sidebar/home.png') }}" alt="home">
-                        <span class="text-[15px]">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <img src="{{ asset('assets/images/sidebar/members.png') }}" alt="home">
-                        <span class="text-[15px]">Members</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <img src="{{ asset('assets/images/sidebar/attendance.png') }}" alt="home">
-                        <span class="text-[15px]">Attendance</span>
-                        <span class="ml-auto bg-blue-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">4</span>
-                    </a>
-                </li>
-                <li>
-                    <h3 class="text-[13px] font-semibold text-gray-400 uppercase mt-6 mb-2 px-4">Quick Access</h3>
-                </li>
-                <li>
-                    <a id="more" href="#" class="flex items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <svg id="arrow" class="w-4 h-4  text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <span class="text-[15px] ">Quick Access</span>
-                    </a>
-                    <div id="moreItems" class="pl-12 hidden">
-                        <a href="#" class="flex items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg">
-                            <span class="text-[15px] pl-2">Add Member</span>
-                        </a>
-                        <a href="#" class="flex items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg">
-                            <span class="text-[15px] pl-2">Subscriptions</span>
-                        </a>
-                        <a href="#" class="flex items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg">
-                            <span class="text-[15px] pl-2">Payment Setting</span>
-                        </a>
-                    </div>
-                </li>
+            <li>
+            <a href="{{ url('dashboard') }}" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('dashboard') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+                @if(!request()->is('dashboard'))
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                @endif
+            <img src="{{ asset('assets/images/sidebar/home.png') }}" alt="home">
+            <span class="text-[15px]">Dashboard</span>
+            </a>
+            </li>
+            <li>
+            <a href="{{ url('owner/members') }}" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('owner/members') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            @if(!request()->is('owner/members'))
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+            @endif
+            <img src="{{ asset('assets/images/sidebar/members.png') }}" alt="home">
+            <span class="text-[15px]">Members</span>
+            </a>
+            </li>
+            <li>
+            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('attendance*') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            @if(!request()->is('attendance*'))
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+            @endif
+            <img src="{{ asset('assets/images/sidebar/attendance.png') }}" alt="home">
+            <span class="text-[15px]">Attendance</span>
+            <span class="ml-auto bg-blue-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">4</span>
+            </a>
+            </li>
+            <li>
+            <h3 class="text-[13px] font-semibold text-gray-400 uppercase mt-6 mb-2 px-4">Quick Access</h3>
+            </li>
+            <li>
+            <a id="more" href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access*') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            @if(!request()->is('quick-access*'))
+            <svg id="arrow" class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+            @endif
+            <span class="text-[15px]">Quick Access</span>
+            </a>
+            <div id="moreItems" class="pl-12 {{ request()->is('quick-access*') ? '' : 'hidden' }}">
+            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/add-member') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+                <span class="text-[15px] pl-2">Add Member</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/subscriptions') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+                <span class="text-[15px] pl-2">Subscriptions</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/payment-setting') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+                <span class="text-[15px] pl-2">Payment Setting</span>
+            </a>
+            </div>
+            </li>
               
-                <li>
-                    <a href="#" class="flex items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <img src="{{ asset('assets/images/sidebar/account.png') }}" alt="home">
-                        <span class="text-[15px]">Account</span>
-                    </a>
-                    <form method="POST" action="{{ route('auth.logout') }}" class="md:hidden">
-                        @csrf
-                        <button type="submit" class="flex w-full items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg text-left">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                            <img src="{{ asset('assets/images/sidebar/logout.png') }}" alt="logout">
-                            <span class="text-[15px]">Logout</span>
-                        </button>
-                    </form>
-                </li>
+            <li>
+            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('account*') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            @if(!request()->is('account*'))
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+            @endif
+            <img src="{{ asset('assets/images/sidebar/account.png') }}" alt="home">
+            <span class="text-[15px]">Account</span>
+            </a>
+            <form method="POST" action="{{ route('auth.logout') }}" class="md:hidden">
+            @csrf
+            <button type="submit" class="flex w-full items-center space-x-3 py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-lg text-left">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <img src="{{ asset('assets/images/sidebar/logout.png') }}" alt="logout">
+                <span class="text-[15px]">Logout</span>
+            </button>
+            </form>
+            </li>
             </ul>
         </nav>
 
