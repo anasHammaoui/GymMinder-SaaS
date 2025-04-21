@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table -> string("name");
-            $table -> text("profile_picture");
-            $table -> string("mobile_number");
-            $table -> string("email");
-            $table -> string("plan");
+                $table->foreignId('user_id')->constrained()->onDelete('cascade');
+                $table -> string("name");
+                $table -> text("profile_picture");
+                $table -> string("mobile_number");
+                $table -> string("email");
+                $table -> string("plan");
             $table->timestamps();
         });
     }

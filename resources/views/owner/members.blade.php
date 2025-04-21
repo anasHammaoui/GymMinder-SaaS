@@ -1,11 +1,59 @@
 @extends('layouts.ownerLayout')
 @section('content')
+
+    <!-- Main Content -->
+    <div id="main-content" class="md:ml-[245px] transition-all duration-300 ease-in-out">
+        <!-- Header -->
+        <nav class="flex px-4 md:px-12 items-center justify-between p-4 border-b border-gray-300 my-4 bg-white">
+            <!-- Left side: Breadcrumb -->
+            <div class="text-gray-500">
+                <span class="font-semibold">{{ $page }}</span> / <span>Default</span>
+            </div>
+    
+            <!-- Right side: Icons -->
+            <div class="flex items-center space-x-4">
+               <!-- Logout Button -->
+               <form method="POST" action="{{ route('auth.logout') }}" class="hidden md:block">
+                @csrf
+                <button type="submit" class="flex cursor-pointer items-center">
+                  <img src="{{ asset('assets/images/sidebar/logout.png') }}" alt="logout">
+                </button>
+            </form>
+            </div>
+        </nav>    
 <div class="container mx-auto px-4 md:px-12 py-4">
     <h1 class="text-lg font-medium mb-6">Members List</h1>
-    
+    {{-- success messages --}}
+    @if (session('success'))
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
+        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.remove();">
+          <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M14.348 14.849a1 1 0 01-1.414 0L10 11.414l-2.934 2.935a1 1 0 01-1.414-1.414l2.935-2.935-2.935-2.934a1 1 0 011.414-1.414L10 8.586l2.934-2.935a1 1 0 011.414 1.414L11.414 10l2.935 2.934a1 1 0 010 1.415z"/>
+          </svg>
+        </button>
+      </div>
+    @endif
+    {{-- error messagees --}}
+    @if ($errors->any())
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <ul class="list-disc pl-5">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.remove();">
+          <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M14.348 14.849a1 1 0 01-1.414 0L10 11.414l-2.934 2.935a1 1 0 01-1.414-1.414l2.935-2.935-2.935-2.934a1 1 0 011.414-1.414L10 8.586l2.934-2.935a1 1 0 011.414 1.414L11.414 10l2.935 2.934a1 1 0 010 1.415z"/>
+          </svg>
+        </button>
+      </div>
+    @endif
     <div class="flex rounded-md px-2 justify-between items-center mb-4 bg-[#F7F9FB] py-2">
         <div class="flex space-x-2">
-            <button class="p-2 cursor-pointer  hover:bg-gray-100">
+            <button id="openModalBtn" class="p-2 cursor-pointer  hover:bg-gray-100">
                 <img src="{{ asset("assets/images/sidebar/plus.png") }}" alt="plus">
             </button>
             <button class="p-2 cursor-pointer  hover:bg-gray-100">
@@ -45,7 +93,7 @@
               <tr class="border-b border-gray-300">
                 <td class="py-3 px-4 text-sm">#{{ $member -> id }}</td>
                 <td class="py-3 px-4 flex items-center">
-                    <img src="{{ asset('images/avatar1.jpg') }}" alt="Avatar" class="w-6 h-6 rounded-full mr-2">
+                    <img src="{{ Storage::url($member -> profile_picture) }}" alt="Avatar" class="w-6 h-6 rounded-full mr-2">
                     <span class="text-sm">{{ $member -> name }}</span>
                 </td>
                 <td class="py-3 px-4 text-sm">{{ $member-> plan }}</td>
@@ -113,4 +161,144 @@
         </div>
     @endif
 </div>
+{{-- add member modal --}}
+ <!-- Modal Overlay -->
+ <div id="modalOverlay" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <div class="absolute inset-0 bg-gray-500/50" id="modalBackdrop"></div>
+    
+    <!-- Modal Content -->
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 z-10">
+      <div class="flex justify-between items-center px-6 py-4 border-b">
+        <h3 class="font-semibold text-lg text-gray-800">Add New Member</h3>
+        <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">
+          <i data-feather="x"></i>
+        </button>
+      </div>
+      
+      <form id="userForm" action="{{ route("addMember") }}" enctype="multipart/form-data" method="POST" class="p-6">
+        @csrf
+        <!-- Name Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="name">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+            placeholder="Enter full name"
+          />
+        </div>
+        
+        <!-- Profile Picture Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="profile_picture">
+            Profile Picture
+          </label>
+          <input
+            type="file"
+            id="profile_picture"
+            name="profile_picture"
+            accept="image/*"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+          />
+        </div>
+        
+        <!-- Mobile Number Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="mobile_number">
+            Mobile Number
+          </label>
+          <input
+            type="tel"
+            id="mobile_number"
+            name="mobile_number"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+            placeholder="+1234567890"
+          />
+        </div>
+
+        <!-- Email Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="email">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+            placeholder="user@example.com"
+          />
+        </div>
+
+        <!-- Plan Field -->
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="plan">
+            Plan
+          </label>
+          <select
+            id="plan"
+            name="plan"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+          >
+            <option value="">Select a plan</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Yearly">Yearly</option>
+          </select>
+        </div>
+
+        <!-- Form Buttons -->
+        <div class="flex space-x-2">
+          <button
+            type="button"
+            id="cancelBtn"
+            class="w-1/2 cursor-pointer py-2 px-4 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="w-1/2 cursor-pointer py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+          >
+            Add Member
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+@endsection
+@section('scripts')
+<script>
+  
+
+    // Modal elements
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const cancelBtn = document.getElementById('cancelBtn');
+    
+    // Open modal
+    openModalBtn.addEventListener('click', () => {
+      modalOverlay.classList.remove('hidden');
+    });
+
+    // Close modal function
+    function closeModal() {
+      modalOverlay.classList.add('hidden');
+    }
+
+    // Close modal event listeners
+    closeModalBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+</script>
 @endsection

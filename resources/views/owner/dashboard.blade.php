@@ -1,4 +1,25 @@
 @extends("layouts.ownerLayout")
+
+    <!-- Main Content -->
+    <div id="main-content" class="md:ml-[245px] transition-all duration-300 ease-in-out">
+        <!-- Header -->
+        <nav class="flex px-4 md:px-12 items-center justify-between p-4 border-b border-gray-300 my-4 bg-white">
+            <!-- Left side: Breadcrumb -->
+            <div class="text-gray-500">
+                <span class="font-semibold">{{ $page }}</span> / <span>Default</span>
+            </div>
+    
+            <!-- Right side: Icons -->
+            <div class="flex items-center space-x-4">
+               <!-- Logout Button -->
+               <form method="POST" action="{{ route('auth.logout') }}" class="hidden md:block">
+                @csrf
+                <button type="submit" class="flex cursor-pointer items-center">
+                  <img src="{{ asset('assets/images/sidebar/logout.png') }}" alt="logout">
+                </button>
+            </form>
+            </div>
+        </nav>    
 {{-- dashboard content --}}
 @section('content')
 <h2 class="px-4 md:px-12 font-semibold text-lg text-gray-800 mb-4">Statistics</h2>
