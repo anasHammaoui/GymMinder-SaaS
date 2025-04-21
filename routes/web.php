@@ -51,4 +51,5 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login')
 Route::middleware(['auth', 'owner'])->group(function () {
     Route::get('/owner/members', [MemberController::class, "index"])->name("owner.members");
     Route::post("/owner/member/add", [MemberController::class, "store"])->name('addMember');
+    Route::delete("/owner/member/delete/{id}", [MemberController::class, "destroy"])->name('deleteMember');
 });

@@ -109,7 +109,11 @@
                 <td class="py-3 px-4"><span class="text-blue-500 text-sm">• wait</span></td>
                 <td class="py-3 px-4">
                     <button class="bg-[#6D6D6D] cursor-pointer text-white text-xs px-4 py-1.5 rounded-md mr-2">Edit</button>
-                    <button class="bg-[#DA4343] cursor-pointer text-white text-xs px-4 py-1.5 rounded-md">Delete</button>
+                    <form method="POST" action="{{ route('deleteMember', $member->id) }}" onsubmit="return confirm('Are you sure you want to delete this member?');" style="display:inline;">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="bg-[#DA4343] cursor-pointer text-white text-xs px-4 py-1.5 rounded-md">Delete</button>
+                    </form>
                 </td>
             </tr>
               @endforeach
