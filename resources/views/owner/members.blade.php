@@ -53,7 +53,7 @@
     @endif
     <div class="flex rounded-md px-2 justify-between items-center mb-4 bg-[#F7F9FB] py-2">
         <div class="flex space-x-2">
-            <button id="openModalBtnAdd" class="p-2 cursor-pointer  hover:bg-gray-100">
+            <button  class="openModalBtnAdd p-2 cursor-pointer  hover:bg-gray-100">
                 <img src="{{ asset("assets/images/sidebar/plus.png") }}" alt="plus">
             </button>
             <button class="p-2 cursor-pointer hover:bg-gray-100" id="togglePayedBtn">
@@ -122,7 +122,7 @@
                     <form method="POST" action="{{ route('member.pay', $member->id) }}" id="paymentForm-{{ $member->id }}">
                     @csrf
                    
-                    <select name="status" class="border  text-white font-medium border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 {{ $isPayed ? ' bg-[#3BA55C]' : 'bg-[#2D96FF]' }} focus:border-gray-400" onchange="handlePaymentStatusChange(this, {{ $member->id }})" {{ $isPayed ? 'disabled' : '' }}>
+                    <select name="status" data-id="{{ $member ->id }}" class="border selectPayed text-white font-medium border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 {{ $isPayed ? ' bg-[#3BA55C]' : 'bg-[#2D96FF]' }} focus:border-gray-400"  {{ $isPayed ? 'disabled' : '' }}>
                       <option value="payed" {{ $isPayed ? 'selected' : '' }}>Payed</option>
                       @if (!$isPayed)
                       <option value="pending" {{ !$isPayed ? 'selected' : '' }}>Pending</option>
@@ -306,44 +306,44 @@
 </div>
 {{-- make payment modal --}}
    <!-- Payment Info Modal -->
-   <div id="paymentModal-{{ $member->id }}" class="fixed inset-0 flex items-center justify-center z-50 hidden">
-    <div class="absolute inset-0 bg-gray-500/50" onclick="closePaymentModal({{ $member->id }})"></div>
-    <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 z-10">
-      <div class="flex justify-between items-center px-6 py-4 border-b">
-        <h3 class="font-semibold text-lg text-gray-800">Payment Information</h3>
-        <button class="text-gray-500 hover:text-gray-700" onclick="closePaymentModal({{ $member->id }})">
-          <i data-feather="x"></i>
-        </button>
-      </div>
-      <form method="POST" action="{{ route('member.pay', $member->id) }}" class="p-6">
-        @csrf
-        <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-medium mb-2" for="amount">
-            Amount
-          </label>
-          <input type="number" id="amount" name="amount" class="w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="Enter amount" required>
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-medium mb-2" for="payment_method">
-            Payment Method
-          </label>
-          <select id="payment_method" name="payment_method" class="w-full py-2 px-3 border border-gray-300 rounded-md" required>
-            <option value="">Select a method</option>
-            <option value="credit_card">Credit Card</option>
-            <option value="cash">Cash</option>
-            <option value="bank_transfer">Bank Transfer</option>
-          </select>
-        </div>
-        <div class="flex space-x-2">
-          <button type="button" class="w-1/2 cursor-pointer py-2 px-4 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50" onclick="closePaymentModal({{ $member->id }})">
-            Cancel
-          </button>
-          <button type="submit" class="w-1/2 cursor-pointer py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-            Submit
-          </button>
-        </div>
-      </form>
+  <div id="paymentModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+   <div class="absolute inset-0 bg-gray-500/50" onclick="closePaymentModal()"></div>
+   <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 z-10">
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h3 class="font-semibold text-lg text-gray-800">Payment Information</h3>
+      <button class="text-gray-500 hover:text-gray-700" onclick="closePaymentModal()">
+       <i data-feather="x"></i>
+      </button>
     </div>
+    <form method="POST"  class="p-6 payForm">
+      @csrf
+      <div class="mb-4">
+       <label class="block text-gray-700 text-sm font-medium mb-2" for="amount">
+        Amount
+       </label>
+       <input type="number" id="amount" name="amount" class="w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="Enter amount" required>
+      </div>
+      <div class="mb-4">
+       <label class="block text-gray-700 text-sm font-medium mb-2" for="payment_method">
+        Payment Method
+       </label>
+       <select id="payment_method" name="payment_method" class="w-full py-2 px-3 border border-gray-300 rounded-md" required>
+        <option value="">Select a method</option>
+        <option value="credit_card">Credit Card</option>
+        <option value="cash">Cash</option>
+        <option value="bank_transfer">Bank Transfer</option>
+       </select>
+      </div>
+      <div class="flex space-x-2">
+       <button type="button" class="w-1/2 cursor-pointer py-2 px-4 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50" onclick="closePaymentModal()">
+        Cancel
+       </button>
+       <button type="submit" class="w-1/2 cursor-pointer py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+        Submit
+       </button>
+      </div>
+    </form>
+   </div>
   </div>
 @endsection
 @section('scripts')
@@ -393,16 +393,26 @@
 </script>
 {{-- handle member payment --}}
 <script>
-  function handlePaymentStatusChange(selectElement, memberId) {
-    if (selectElement.value === 'payed') {
-      document.getElementById(`paymentModal-${memberId}`).classList.remove('hidden');
-    } else {
-      document.getElementById(`paymentForm-${memberId}`).submit();
-    }
-  }
 
-  function closePaymentModal(memberId) {
-    document.getElementById(`paymentModal-${memberId}`).classList.add('hidden');
+  let selectPayed = document.querySelectorAll(".selectPayed");
+  selectPayed.forEach(select=>{
+    let memberId = select.dataset.id;
+    console.log(memberId)
+    select.addEventListener("change",()=>{
+        if (select.value === 'payed') {
+        document.querySelector(".payForm").action = "{{ route('member.pay', '') }}/" + memberId;
+        document.getElementById(`paymentModal`).classList.remove('hidden');
+      } else {
+        document.getElementById(`paymentForm`).submit();
+      }
+    })
+    // function handlePaymentStatusChange(selectElement, memberId) {
+    
+    // }
+  })
+
+  function closePaymentModal() {
+    document.getElementById(`paymentModal`).classList.add('hidden');
   }
   // filter by payed members
   document.getElementById('togglePayedBtn').addEventListener('click', function() {
