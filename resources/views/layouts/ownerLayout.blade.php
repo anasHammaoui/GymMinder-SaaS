@@ -88,9 +88,9 @@
             <span class="text-[15px]">Quick Access</span>
             </a>
             <div id="moreItems" class="pl-12 {{ request()->is('quick-access*') ? '' : 'hidden' }}">
-            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/add-member') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            <button id="openModalBtnAdd" class="flex cursor-pointer items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/add-member') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
                 <span class="text-[15px] pl-2">Add Member</span>
-            </a>
+            </button>
             <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/subscriptions') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
                 <span class="text-[15px] pl-2">Subscriptions</span>
             </a>
@@ -131,6 +131,117 @@
     </div>
 
     @yield('content')
+    {{-- add member modal --}}
+    {{-- add member modal --}}
+ <!-- Modal Overlay -->
+ <div id="modalOverlayAdd" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+
+
+    <div class="absolute inset-0 bg-gray-500/50" id="modalBackdropAdd"></div>
+    
+    <!-- Modal Content -->
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 z-10">
+      <div class="flex justify-between items-center px-6 py-4 border-b">
+        <h3 class="font-semibold text-lg text-gray-800">Add New Member</h3>
+        <button id="closeModalBtnAdd" class="text-gray-500 hover:text-gray-700">
+          <i data-feather="x"></i>
+        </button>
+      </div>
+      
+      <form id="userForm" action="{{ route("addMember") }}" enctype="multipart/form-data" method="POST" class="p-6">
+        @csrf
+        <!-- Name Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="name">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+            placeholder="Enter full name"
+          />
+        </div>
+        
+        <!-- Profile Picture Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="profile_picture">
+            Profile Picture
+          </label>
+          <input
+            type="file"
+            id="profile_picture"
+            name="profile_picture"
+            accept="image/*"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+          />
+        </div>
+        
+        <!-- Mobile Number Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="mobile_number">
+            Mobile Number
+          </label>
+          <input
+            type="tel"
+            id="mobile_number"
+            name="mobile_number"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+            placeholder="+1234567890"
+          />
+        </div>
+
+        <!-- Email Field -->
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="email">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+            placeholder="user@example.com"
+          />
+        </div>
+
+        <!-- Plan Field -->
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="plan">
+            Plan
+          </label>
+          <select
+            id="plan"
+            name="plan"
+            class="w-full py-2 px-3 border border-gray-300 rounded-md"
+          >
+            <option value="">Select a plan</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Yearly">Yearly</option>
+          </select>
+        </div>
+
+        <!-- Form Buttons -->
+        <div class="flex space-x-2">
+          <button
+            type="button"
+            id="cancelBtnAdd"
+            class="w-1/2 cursor-pointer py-2 px-4 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="w-1/2 cursor-pointer py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+          >
+            Add Member
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
 {{-- scripts --}}
     @yield('scripts')
     <script>
@@ -149,7 +260,33 @@
     mobileMenuButton.addEventListener("click",()=>{
         sidebar.classList.toggle("hidden")
     })
+    // ************************Add member modal
+    // Modal elements
+    const openModalBtnAdd = document.getElementById('openModalBtnAdd');
+    const closeModalBtnAdd = document.getElementById('closeModalBtnAdd');
+    const modalOverlayAdd = document.getElementById('modalOverlayAdd');
+    const modalBackdropAdd = document.getElementById('modalBackdropAdd');
+    const cancelBtnAdd = document.getElementById('cancelBtnAdd');
+    
+    // Open modal
+    openModalBtnAdd.addEventListener('click', () => {
+      modalOverlayAdd.classList.remove('hidden');
+    });
 
+    // Close modal function
+    function closeModal() {
+      modalOverlayAdd.classList.add('hidden');
+    }
+
+    // Close modal event listeners
+    closeModalBtnAdd.addEventListener('click', closeModal);
+    modalBackdropAdd.addEventListener('click', closeModal);
+    cancelBtnAdd.addEventListener('click', closeModal);
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
     </script>
 </body>
 </html>
