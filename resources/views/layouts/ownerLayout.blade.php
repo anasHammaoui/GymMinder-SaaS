@@ -88,7 +88,7 @@
             <span class="text-[15px]">Quick Access</span>
             </a>
             <div id="moreItems" class="pl-12 {{ request()->is('quick-access*') ? '' : 'hidden' }}">
-            <button id="openModalBtnAdd" class="flex cursor-pointer items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/add-member') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            <button  class="openModalBtnAdd flex cursor-pointer items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/add-member') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
                 <span class="text-[15px] pl-2">Add Member</span>
             </button>
             <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/subscriptions') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
@@ -262,15 +262,17 @@
     })
     // ************************Add member modal
     // Modal elements
-    const openModalBtnAdd = document.getElementById('openModalBtnAdd');
+    const openModalBtnAdd = document.querySelectorAll('.openModalBtnAdd');
     const closeModalBtnAdd = document.getElementById('closeModalBtnAdd');
     const modalOverlayAdd = document.getElementById('modalOverlayAdd');
     const modalBackdropAdd = document.getElementById('modalBackdropAdd');
     const cancelBtnAdd = document.getElementById('cancelBtnAdd');
     
     // Open modal
-    openModalBtnAdd.addEventListener('click', () => {
+    openModalBtnAdd.forEach(btn => {
+        btn.addEventListener('click', () => {
       modalOverlayAdd.classList.remove('hidden');
+    });
     });
 
     // Close modal function
