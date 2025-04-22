@@ -63,4 +63,46 @@ class MemberController extends Controller
            return redirect() -> route("unauthorized");
 
         }
+        // update member
+        public function update(Request $request, $id)
+        {
+            if (Auth::check()) {
+                $member = Member::where('id', $id)->where('user_id', Auth::id())->first();
+
+                if (!$member) {
+                    return redirect()->route('owner.members')->with('error', 'Member not found or unauthorized.');
+                }
+
+                $request->validate([
+                    'name' => 'required|string|max:255',
+                    'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                    'mobile_number' => 'required|string|max:20',
+                    'email' => 'required|email|unique:members,email,' . $member->id,
+                    'plan' => 'required|string|max:255',
+                ]);
+
+                if ($request->hasFile('profile_picture')) {
+                    // Delete the old profile picture if it exists
+                    if ($member->profile_picture && Storage::disk('public')->exists($member->profile_picture)) {
+                        Storage::disk('public')->delete($member->profile_picture);
+                    }
+
+                    // Store the new profile picture
+                    $imageName = time() . '.' . $request->profile_picture->extension();
+                    $request->profile_picture->storeAs('members', $imageName, 'public');
+                    $member->profile_picture = "members/" . $imageName;
+                }
+
+                // Update member details
+                $member->name = $request->name;
+                $member->mobile_number = $request->mobile_number;
+                $member->email = $request->email;
+                $member->plan = $request->plan;
+                $member->save();
+
+                return redirect()->route('owner.members')->with('success', 'Member updated successfully.');
+            }
+
+            return redirect()->route("unauthorized");
+        }
 }
