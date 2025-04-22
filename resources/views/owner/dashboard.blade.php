@@ -168,21 +168,6 @@
             }
         }
     });
-    // Quick Access Toggle
-    let more = document.getElementById("more");
-    let moreItems = document.getElementById("moreItems");
-    let arrow = document.getElementById("arrow");
-    more.addEventListener("click", () => {
-        moreItems.classList.toggle("hidden");
-        document.getElementById("side-logo").classList.toggle("hidden")
-    });
-    // Mobile Menu Toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('main-content');
-    mobileMenuButton.addEventListener("click",()=>{
-        sidebar.classList.toggle("hidden")
-    })
 
 </script>
 @endsection

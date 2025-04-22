@@ -90,6 +90,13 @@
             </thead>
             <tbody>
               @foreach ($members as  $member)
+              @php
+              $isPayed = false;
+              $latestPayment = $member->payment()->latest()->first();
+              if ($latestPayment && $latestPayment->created_at) {
+                $isPayed = $latestPayment->created_at->diffInDays(now()) <= 30;
+              }
+            @endphp
               <tr class="border-b border-gray-300">
                 <td class="py-3 px-4 text-sm">#{{ $member -> id }}</td>
                 <td class="py-3 px-4 flex items-center">
@@ -103,10 +110,21 @@
                         <svg class="h-4 w-4 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                       wait
+                         {{ $member->created_at->addDays(30)->format('M j, Y') }}
                     </div>
                 </td>
-                <td class="py-3 px-4"><span class="text-blue-500 text-sm">• wait</span></td>
+                <td class="py-3 px-4">
+                    <form method="POST" action="{{ route('member.pay', $member->id) }}" id="paymentForm-{{ $member->id }}">
+                    @csrf
+                   
+                    <select name="status" class="border  text-white font-medium border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 {{ $isPayed ? ' bg-[#3BA55C]' : 'bg-[#2D96FF]' }} focus:border-gray-400" onchange="handlePaymentStatusChange(this, {{ $member->id }})" {{ $isPayed ? 'disabled' : '' }}>
+                      <option value="payed" {{ $isPayed ? 'selected' : '' }}>Payed</option>
+                      @if (!$isPayed)
+                      <option value="pending" {{ !$isPayed ? 'selected' : '' }}>Pending</option>
+                      @endif
+                    </select>
+                    </form>
+                </td>
                 <td class="py-3 px-4">
                     <button
                       class="bg-[#6D6D6D] openModalBtnUpdate cursor-pointer text-white text-xs px-4 py-1.5 rounded-md mr-2"
@@ -391,6 +409,47 @@
     </form>
   </div>
 </div>
+{{-- make payment modal --}}
+   <!-- Payment Info Modal -->
+   <div id="paymentModal-{{ $member->id }}" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <div class="absolute inset-0 bg-gray-500/50" onclick="closePaymentModal({{ $member->id }})"></div>
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 z-10">
+      <div class="flex justify-between items-center px-6 py-4 border-b">
+        <h3 class="font-semibold text-lg text-gray-800">Payment Information</h3>
+        <button class="text-gray-500 hover:text-gray-700" onclick="closePaymentModal({{ $member->id }})">
+          <i data-feather="x"></i>
+        </button>
+      </div>
+      <form method="POST" action="{{ route('member.pay', $member->id) }}" class="p-6">
+        @csrf
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="amount">
+            Amount
+          </label>
+          <input type="number" id="amount" name="amount" class="w-full py-2 px-3 border border-gray-300 rounded-md" placeholder="Enter amount" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-medium mb-2" for="payment_method">
+            Payment Method
+          </label>
+          <select id="payment_method" name="payment_method" class="w-full py-2 px-3 border border-gray-300 rounded-md" required>
+            <option value="">Select a method</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="cash">Cash</option>
+            <option value="bank_transfer">Bank Transfer</option>
+          </select>
+        </div>
+        <div class="flex space-x-2">
+          <button type="button" class="w-1/2 cursor-pointer py-2 px-4 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50" onclick="closePaymentModal({{ $member->id }})">
+            Cancel
+          </button>
+          <button type="submit" class="w-1/2 cursor-pointer py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 @endsection
 @section('scripts')
 <script>
@@ -463,5 +522,19 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
+</script>
+{{-- handle member payment --}}
+<script>
+  function handlePaymentStatusChange(selectElement, memberId) {
+    if (selectElement.value === 'payed') {
+      document.getElementById(`paymentModal-${memberId}`).classList.remove('hidden');
+    } else {
+      document.getElementById(`paymentForm-${memberId}`).submit();
+    }
+  }
+
+  function closePaymentModal(memberId) {
+    document.getElementById(`paymentModal-${memberId}`).classList.add('hidden');
+  }
 </script>
 @endsection

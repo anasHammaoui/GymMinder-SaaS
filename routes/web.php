@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MemberPayment;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -53,4 +54,6 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::post("/owner/member/add", [MemberController::class, "store"])->name('addMember');
     Route::delete("/owner/member/delete/{id}", [MemberController::class, "destroy"])->name('deleteMember');
     Route::put("/owner/member/update/{id}", [MemberController::class, "update"])->name('updateMember');
+    // mark as payed
+    Route::post('/owner/members/pay/{id}',[MemberPayment::class, "pay"]) -> name("member.pay");
 });

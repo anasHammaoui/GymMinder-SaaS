@@ -10,4 +10,7 @@ class Member extends Model
     public function owner(){
         return $this -> belongsTo(User::class);
     }
+    public function payment(){
+        return $this -> hasMany(MemberPayment::class);
+    }
 }

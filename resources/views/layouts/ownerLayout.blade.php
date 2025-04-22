@@ -23,7 +23,7 @@
         </svg>
     </button>
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed hidden top-0 left-0 h-full w-[260px] bg-white md:flex flex-col justify-between border-r border-gray-300">
+    <div id="sidebar" class="fixed hidden top-0 left-0 h-full w-[260px] bg-white z-50 md:flex flex-col justify-between border-r border-gray-300">
         <!-- Sidebar Header -->
         <div class="pt-6 px-4">
             <div class="flex items-center space-x-3">
@@ -133,5 +133,23 @@
     @yield('content')
 {{-- scripts --}}
     @yield('scripts')
+    <script>
+            // Quick Access Toggle
+    let more = document.getElementById("more");
+    let moreItems = document.getElementById("moreItems");
+    let arrow = document.getElementById("arrow");
+    more.addEventListener("click", () => {
+        moreItems.classList.toggle("hidden");
+        document.getElementById("side-logo").classList.toggle("hidden")
+    });
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+    mobileMenuButton.addEventListener("click",()=>{
+        sidebar.classList.toggle("hidden")
+    })
+
+    </script>
 </body>
 </html>
