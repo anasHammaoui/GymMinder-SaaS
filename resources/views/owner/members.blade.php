@@ -56,16 +56,21 @@
             <button id="openModalBtnAdd" class="p-2 cursor-pointer  hover:bg-gray-100">
                 <img src="{{ asset("assets/images/sidebar/plus.png") }}" alt="plus">
             </button>
-            <button class="p-2 cursor-pointer  hover:bg-gray-100">
-                <img src="{{ asset("assets/images/sidebar/filter.png") }}" alt="filter">
+            <button class="p-2 cursor-pointer hover:bg-gray-100" id="togglePayedBtn">
+              <img src="{{ asset("assets/images/sidebar/filter.png") }}" alt="filter">
             </button>
-            <button class="p-2 cursor-pointer  hover:bg-gray-100">
-                <img src="{{ asset("assets/images/sidebar/order.png") }}" alt="order">
-            </button>
+       
         </div>
         <div>
             <div class="relative">
-                <input type="text" placeholder="Search" class="border pl-7 border-gray-300 rounded-md px-3 py-1.5 pr-8 w-56 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400" />
+                <form  class="relative">
+                  <input type="text" name="query" placeholder="Search" class="border pl-7 border-gray-300 rounded-md px-3 py-1.5 pr-8 w-56 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400" />
+                  <button type="submit" class="absolute inset-y-0 left-2 flex items-center pr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </button>
+                </form>
                 <div class="absolute inset-y-0 left-2 flex items-center pr-3 pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -536,5 +541,71 @@
   function closePaymentModal(memberId) {
     document.getElementById(`paymentModal-${memberId}`).classList.add('hidden');
   }
+  // filter by payed members
+  document.getElementById('togglePayedBtn').addEventListener('click', function() {
+                const rows = document.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                  const statusSelect = row.querySelector('select[name="status"]');
+                  if (statusSelect) {
+                    const isPayed = statusSelect.value === 'payed';
+                    row.style.display = isPayed ? (row.style.display === 'none' ? '' : 'none') : '';
+                  }
+                });
+              });
+    // search members
+    document.querySelector('input[name="query"]').addEventListener('input', function () {
+      const query = this.value;
+      const tbody = document.querySelector('tbody');
+
+      if (query.length > 2) {
+        fetch(`{{ route('searchMembers') }}?query=${query}`, {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            tbody.innerHTML = '';
+            data.members.forEach(member => {
+              const isPayed = member.is_payed ? 'Payed' : 'Pending';
+                const profilePicture = member.profile_picture ? `{{ Storage::url('${member.profile_picture}') }}` : '{{ asset("assets/images/default-avatar.png") }}'; 
+              tbody.innerHTML += `
+              <tr class="border-b border-gray-300">
+                <td class="py-3 px-4 text-sm">#${member.id}</td>
+                <td class="py-3 px-4 flex items-center">
+                  <img src="${profilePicture}" alt="Avatar" class="w-6 h-6 rounded-full mr-2" onerror="this.src='{{ asset("assets/images/default-avatar.png") }}';">
+                  <span class="text-sm">${member.name}</span>
+                </td>
+                <td class="py-3 px-4 text-sm">${member.plan}</td>
+                <td class="py-3 px-4 text-sm">${member.created_at}</td>
+                <td class="py-3 px-4 text-sm">${member.next_payment || 'Not Payed Yet'}</td>
+                <td class="py-3 px-4">
+                  <span class="px-2 py-1 rounded-md text-white ${member.is_payed ? 'bg-[#3BA55C]' : 'bg-[#2D96FF]'}">${isPayed}</span>
+                </td>
+                <td class="py-3 px-4">
+                  <button class="bg-[#6D6D6D] openModalBtnUpdate cursor-pointer text-white text-xs px-4 py-1.5 rounded-md mr-2"
+                    data-name="${member.name}" 
+                    data-email="${member.email}"  
+                    data-plan="${member.plan}"
+                    data-phone="${member.mobile_number}">
+                    Edit
+                  </button>
+                  <form method="POST" action="/deleteMember/${member.id}" onsubmit="return confirm('Are you sure you want to delete this member?');" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-[#DA4343] cursor-pointer text-white text-xs px-4 py-1.5 rounded-md">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              `;
+            });
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      } else if (query.length === 0) {
+        location.reload();
+      }
+    });
 </script>
 @endsection

@@ -11,7 +11,7 @@ class MemberController extends Controller
 {
         public function index(){
             if (Auth::check()){
-                $members = Member::where("user_id", Auth::user()->id)->paginate(1);
+                $members = Member::where("user_id", Auth::user()->id)->paginate(5);
                 return view("owner.members",compact("members")) -> with("page","Members");
             }
             return redirect("/unauthorized");
@@ -105,4 +105,33 @@ class MemberController extends Controller
 
             return redirect()->route("unauthorized");
         }
+        public function search(Request $request)
+        {
+            if (Auth::check()) {
+            $request->validate([
+                'query' => 'nullable|string|max:255',
+            ]);
+            $query = $request->input('query', '');
+
+            $members = Member::where('user_id', Auth::id())
+                ->where(function ($q) use ($query) {
+                $q->where('name', 'LIKE', '%' . $query . '%')
+                  ->orWhere('email', 'LIKE', '%' . $query . '%')
+                  ->orWhere('mobile_number', 'LIKE', '%' . $query . '%')
+                  ->orWhere('plan', 'LIKE', '%' . $query . '%');
+                })
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'members' => $members,
+            ]);
+            }
+
+            return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized',
+            ], 401);
+        }
+
 }

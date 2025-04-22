@@ -56,4 +56,6 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::put("/owner/member/update/{id}", [MemberController::class, "update"])->name('updateMember');
     // mark as payed
     Route::post('/owner/members/pay/{id}',[MemberPayment::class, "pay"]) -> name("member.pay");
+    // search members
+    Route::get('/owner/members/search', [MemberController::class, "search"])->name('searchMembers');
 });
