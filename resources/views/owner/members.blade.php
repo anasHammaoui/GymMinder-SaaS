@@ -451,7 +451,7 @@
                   <span class="text-sm">${member.name}</span>
                 </td>
                 <td class="py-3 px-4 text-sm">${member.plan}</td>
-                <td class="py-3 px-4 text-sm">${member.created_at}</td>
+               <td class="py-3 px-4 text-sm">${new Date(member.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
                 <td class="py-3 px-4 text-sm">${member.next_payment || 'Not Payed Yet'}</td>
                 <td class="py-3 px-4">
                   <span class="px-2 py-1 rounded-md text-white ${member.is_payed ? 'bg-[#3BA55C]' : 'bg-[#2D96FF]'}">${isPayed}</span>

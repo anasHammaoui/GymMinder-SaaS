@@ -13,4 +13,7 @@ class Member extends Model
     public function payment(){
         return $this -> hasMany(MemberPayment::class);
     }
+    public function attendances(){
+        return $this -> hasMany(Attendance::class);
+    }
 }
