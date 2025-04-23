@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\EmailVerifyController;
@@ -58,4 +59,10 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::post('/owner/members/pay/{id}',[MemberPayment::class, "pay"]) -> name("member.pay");
     // search members
     Route::get('/owner/members/search', [MemberController::class, "search"])->name('searchMembers');
+});
+// Attendance Routes
+Route::middleware(["auth","owner"]) -> group(function (){
+    Route::get("/owner/attendance",[AttendanceController::class,"index"])-> name("attendance");
+    Route::post("/owner/attendance/{id}",[AttendanceController::class,"markAttendance"])-> name("markAttendance");
+    Route::get("owner/attendance/{id}",[AttendanceController::class, 'attendanceCalendar']) -> name("showAttendace");
 });

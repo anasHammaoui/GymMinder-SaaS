@@ -12,4 +12,10 @@ class Attendance extends Model
         'is_present',
         'attendance_date',
     ];
+    protected $casts = [
+        'attendance_date' => 'datetime',
+    ];
+    public function member(){
+        return $this -> belongsTo(Member::class);
+    }
 }
