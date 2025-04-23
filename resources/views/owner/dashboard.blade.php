@@ -1,6 +1,28 @@
 @extends("layouts.ownerLayout")
+
+    <!-- Main Content -->
+    <div id="main-content" class="md:ml-[245px] transition-all duration-300 ease-in-out">
+        <!-- Header -->
+        <nav class="flex px-4 md:px-12 items-center justify-between p-4 border-b border-gray-300 my-4 bg-white">
+            <!-- Left side: Breadcrumb -->
+            <div class="text-gray-500">
+                <span class="font-semibold">{{ $page }}</span> / <span>Default</span>
+            </div>
+    
+            <!-- Right side: Icons -->
+            <div class="flex items-center space-x-4">
+               <!-- Logout Button -->
+               <form method="POST" action="{{ route('auth.logout') }}" class="hidden md:block">
+                @csrf
+                <button type="submit" class="flex cursor-pointer items-center">
+                  <img src="{{ asset('assets/images/sidebar/logout.png') }}" alt="logout">
+                </button>
+            </form>
+            </div>
+        </nav>    
 {{-- dashboard content --}}
 @section('content')
+<h2 class="px-4 md:px-12 font-semibold text-lg text-gray-800 mb-4">Statistics</h2>
     <!-- Statistics Section -->
     <div class="grid px-4 md:px-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <!-- Total Members -->
@@ -146,21 +168,6 @@
             }
         }
     });
-    // Quick Access Toggle
-    let more = document.getElementById("more");
-    let moreItems = document.getElementById("moreItems");
-    let arrow = document.getElementById("arrow");
-    more.addEventListener("click", () => {
-        moreItems.classList.toggle("hidden");
-        document.getElementById("side-logo").classList.toggle("hidden")
-    });
-    // Mobile Menu Toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('main-content');
-    mobileMenuButton.addEventListener("click",()=>{
-        sidebar.classList.toggle("hidden")
-    })
 
 </script>
 @endsection

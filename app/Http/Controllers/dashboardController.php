@@ -14,6 +14,6 @@ class dashboardController extends Controller
        } elseif($user === "admin"){
         return 'hello admin';
        }
-       return "You don't have access to this page";
+       return redirect("/unauthorized");
     }
 }
