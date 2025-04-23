@@ -29,8 +29,8 @@
         <div class="bg-[#E3F5FF] p-6 rounded-xl ">
             <h3 class="text-sm font-medium text-gray-500 mb-4">Total Members</h3>
             <div class="flex items-baseline justify-between">
-                <span class="text-3xl font-bold">370</span>
-                <span class="text-green-500 text-sm">+11.02%</span>
+                <span class="text-3xl font-bold">{{ $members }}</span>
+               
             </div>
         </div>
 
@@ -38,8 +38,7 @@
         <div class="bg-[#E5ECF6] p-6 rounded-xl ">
             <h3 class="text-sm font-medium text-gray-500 mb-4">Monthly Revenue</h3>
             <div class="flex items-baseline justify-between">
-                <span class="text-3xl font-bold">15080 $</span>
-                <span class="text-green-500 text-sm">+10%</span>
+                <span class="text-3xl font-bold">{{ $payment }}$</span>
             </div>
         </div>
 
@@ -47,8 +46,7 @@
         <div class="bg-[#E3F5FF] p-6 rounded-xl ">
             <h3 class="text-sm font-medium text-gray-500 mb-4">Active Users</h3>
             <div class="flex items-baseline justify-between">
-                <span class="text-3xl font-bold">267</span>
-                <span class="text-green-500 text-sm">+15.03%</span>
+                <span class="text-3xl font-bold">{{ $payedMembers }}</span>
             </div>
         </div>
     </div>
@@ -88,22 +86,26 @@
 <script>
     // Attendance Chart
     const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceThisMonth = @json($attendancePerMonth['thisMonth']);
+    const attendanceLastMonth = @json($attendancePerMonth['lastMonth']);
+    const daysInMonth = Array.from({ length: 31 }, (_, i) => i + 1);
+
     new Chart(attendanceCtx, {
         type: 'line',
         data: {
-            labels: ['1', '3', '6', '9', '12', '15', '18', '21', '24', '27', '30'],
+            labels: daysInMonth,
             datasets: [
                 {
                     label: 'This Month',
-                    data: [0, 70, 90, 150, 120, 90, 150, 180, 200, 220, 280],
+                    data: daysInMonth.map(day => Math.floor(attendanceThisMonth[day] || 0)),
                     borderColor: '#60A5FA',
                     tension: 0.4,
                     fill: false
                 },
                 {
                     label: 'Last Month',
-                    data: [0, 60, 80, 70, 100, 140, 130, 160, 170, 190, 200],
-                    borderColor: '#D1D5DB',
+                    data: daysInMonth.map(day => Math.floor(attendanceLastMonth[day] || 0)),
+                    borderColor: '#A3A3A3',
                     tension: 0.4,
                     fill: false
                 }
@@ -117,6 +119,9 @@
                     beginAtZero: true,
                     grid: {
                         display: false
+                    },
+                    ticks: {
+                        stepSize: 1
                     }
                 },
                 x: {
@@ -127,7 +132,7 @@
             },
             plugins: {
                 legend: {
-                    display: false
+                    display: true
                 }
             }
         }
@@ -135,12 +140,15 @@
 
     // Revenue Chart
     const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    const revenuePerMonth = @json(array_values($revenuePerMonth));
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
     new Chart(revenueCtx, {
         type: 'bar',
         data: {
-            labels: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun'],
+            labels: months,
             datasets: [{
-                data: [12000, 14000, 12000, 15000, 10000, 13000],
+                data: revenuePerMonth,
                 backgroundColor: '#818CF8',
                 borderRadius: 4
             }]
