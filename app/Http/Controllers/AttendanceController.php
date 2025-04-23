@@ -13,7 +13,7 @@ class AttendanceController extends Controller
         if (Auth::check()){
             if (Auth::check()){
                 $members = Member::where("user_id", Auth::user()->id)->paginate(5);
-                return view("owner.attendance",compact("members")) -> with("page","Members");
+                return view("owner.attendance",compact("members")) -> with("page","Attendance");
             }
             return redirect("/unauthorized");
         }
