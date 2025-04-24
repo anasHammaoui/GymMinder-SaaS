@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="GymMinder">
+    <meta name="description" content="'GymMinder is your all-in-one gym management platform. Schedule, track, and grow your fitness business with ease.">
+    <meta name="keywords" content="Gym Management, Fitness Software, Gym SaaS, Workout Scheduler, Gym CRM, GymMinder">
+
+    <link rel="icon"  href="{{ asset('assets/images/favicon.png') }}">
     <title>GymMinder {{ $page ?? '' }}</title>
     @vite("resources/css/app.css")
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* @media screen and (min-width: 758px) {
-            .dash{
-                margin-left: 245px;
-            }
-        } */
-    </style>
 </head>
 <body class="bg-white">
     
@@ -101,8 +99,8 @@
             </li>
               
             <li>
-            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('account*') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
-            @if(!request()->is('account*'))
+            <a href="/owner/profile" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('owner/profile') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            @if(!request()->is('owner/profile'))
             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
