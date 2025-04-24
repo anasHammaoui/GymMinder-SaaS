@@ -76,4 +76,6 @@ Route::get('/owner/subscriptions', [PlatformPaymentController::class, 'index'])-
 // website admin
 Route::middleware(["auth","admin"])-> group(function (){
 Route::get("admin/owners",[AdminOwnersController::class,"index"]) -> name("admin.owners");
+Route::put("admin/owners/{id}",[AdminOwnersController::class,"ownerStatus"]) -> name("admin.status");
+Route::get("admin/owners/search", [AdminOwnersController::class, "search"])->name('searchOwners');
 });
