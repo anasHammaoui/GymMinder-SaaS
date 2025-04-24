@@ -23,6 +23,9 @@ return new class extends Migration
             $table -> enum('gender',["male","female"]) -> nullable();
             $table -> text("profile_pic") -> nullable();
             $table -> boolean("is_active") -> nullable();
+            $table -> boolean('isAuto') -> nullable();
+            $table -> string("payment_method") -> nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
