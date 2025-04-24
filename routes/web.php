@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminOwnersController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\dashboardController;
@@ -72,3 +73,7 @@ Route::middleware(["auth","owner"]) -> group(function (){
 Route::resource('profile', ProfileController::class)->middleware('auth')->names('profile');
 // owner subscriptions
 Route::get('/owner/subscriptions', [PlatformPaymentController::class, 'index'])-> middleware(['auth', 'owner'])->name("subscriptions");
+// website admin
+Route::middleware(["auth","admin"])-> group(function (){
+Route::get("admin/owners",[AdminOwnersController::class,"index"]) -> name("admin.owners");
+});
