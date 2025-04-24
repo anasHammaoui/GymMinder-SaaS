@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Member;
 use App\Models\MemberPayment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,9 +51,26 @@ class dashboardController extends Controller
     $revenuePerMonth = collect(range(1, 12))->mapWithKeys(function ($month) use ($revenuePerMonth) {
         return [$month => $revenuePerMonth[$month] ?? 0];
     })->toArray();
+
      return view("owner.dashboard",compact(["members","payment","payedMembers","attendance","attendancePerMonth","revenuePerMonth"])) -> with('page','Dashboard');
+
        } elseif($user === "admin"){
-        return 'hello admin';
+        $owners = User::where("role","owner")->count();
+        $activeOwners = User::where("role","owner")-> where("is_active",true)->count();
+        // Get registration per day for the current and last month
+        $registrationPerMonth = collect(['thisMonth' => now()->month, 'lastMonth' => now()->subMonth()->month])
+            ->mapWithKeys(function ($month, $key) {
+                $registrations = User::where("role","owner")->selectRaw('DAY(created_at) as day, COUNT(*) as count')
+                    ->whereMonth('created_at', $month)
+                    ->groupBy('day')
+                    ->orderBy('day')
+                    ->pluck('count', 'day')
+                    ->toArray();
+
+                return [$key => array_replace(array_fill(1, 30, 0), $registrations)];
+            })
+            ->toArray();
+        return view("admin.dashboard",compact(["owners","activeOwners","registrationPerMonth"])) -> with("page","Dashboard");
        }
        return redirect("/unauthorized");
     }
