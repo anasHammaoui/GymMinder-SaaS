@@ -117,8 +117,6 @@
                 <td class="py-3 px-4">
                   {{-- show calender --}}
                       <button data-id="{{ $member->id }}" class="bg-[#1F66AC] showCalender cursor-pointer text-white text-xs px-4 py-1.5 rounded-md">Details</button>
-                  
-                   
                 </td>
             </tr>
               @endforeach

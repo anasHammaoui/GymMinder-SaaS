@@ -8,6 +8,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MemberPayment;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\OwnerProfileController;
+use App\Http\Controllers\PlatformPaymentController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -69,3 +70,5 @@ Route::middleware(["auth","owner"]) -> group(function (){
 });
 // owner profile routes
 Route::resource('owner/profile', OwnerProfileController::class)->middleware(['auth', 'owner'])->names('profile');
+// owner subscriptions
+Route::get('/owner/subscriptions', [PlatformPaymentController::class, 'index'])-> middleware(['auth', 'owner'])->name("subscriptions");

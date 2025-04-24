@@ -7,12 +7,13 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'name',
         'email',
         'password',
+        'business_name',
+        'role',
+        'country',
+        'gender',
+        'profile_pic',
+        'is_active',
+        'isAuto',
+        'payment_method',
     ];
 
     /**
@@ -50,5 +59,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function members(){
         return $this -> hasMany(Member::class);
+    }
+    public function payment(){
+        return $this -> hasMany(PlatformPayment::class);
     }
 }

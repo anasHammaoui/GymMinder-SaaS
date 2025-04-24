@@ -25,7 +25,8 @@
     <div class="container mx-auto px-4 md:px-12 py-4">
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="text-gray-500 pb-8">
-                <span class="font-semibold">Profile</span> / <span>Subscriptions</span>
+                <a href="{{ route('profile.index') }}" class="font-semibold text-blue-500 hover:underline">Profile</a> / 
+                <a href="{{ route('subscriptions') }}" class="text-blue-500 hover:underline">Subscriptions</a>
             </div>
             @if (session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -60,7 +61,15 @@
 
                 <div class="flex items-center space-x-6 mb-6">
                     <div class="relative">
-                        <img src="{{ Auth::user()->profile_pic ? Storage::url(Auth::user()->profile_pic) : 'https://avatar.iran.liara.run/public' }}" alt="Profile Picture" class="w-20 h-20 rounded-full">
+                        <div class="flex items-center space-x-3">
+                            @if(auth()->user()->profile_pic)
+                                <img src="{{ Storage::url(auth()->user()->profile_pic) }}" alt="Profile Photo" class="w-16 h-16 rounded-full object-cover">
+                            @else
+                                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 font-bold">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                            @endif
+                        </div>
                         <input type="file" name="profile_pic" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer">
                     </div>
                     <div>
