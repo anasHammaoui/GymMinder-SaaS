@@ -106,7 +106,6 @@
                             </div>
                         </td>
                         <td class="py-3 px-4">
-                            <button class="bg-[#6D6D6D] openModalBtnUpdate cursor-pointer text-white text-xs px-4 py-1.5 rounded-md mr-2">Edit</button>
                             <form method="POST" action="{{ route('admin.status',$owner->id) }}" onsubmit="return confirm('Are you sure you want to {{ $owner->is_active ? 'Desactivate' : 'Activate' }} this owner?');" style="display:inline;">
                                 @csrf
                                 @method('PUT')
