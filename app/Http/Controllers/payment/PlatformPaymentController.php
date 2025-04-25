@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\payment;
 
+use App\Http\Controllers\Controller;
 use App\Models\PlatformPayment;
+use App\Models\User;
+use App\Notifications\AdminNotification;
+use App\Notifications\PaymentNotification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +66,11 @@ class PlatformPaymentController extends Controller
                     'paymentMethod' => 'stripe',
                     'paymentDate' => now()
                 ]);
-
+                $user->notify(new PaymentNotification());
+                $admins = User::where('role', 'admin')->get();
+                foreach ($admins as $admin) {
+                    $admin->notify(new AdminNotification($user));
+                }
                 // Flash success message
                 Session::flash('success', 'Payment successful! Your subscription has been activated.');
 

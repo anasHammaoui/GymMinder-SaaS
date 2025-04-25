@@ -89,11 +89,8 @@
             <button  class="openModalBtnAdd flex cursor-pointer items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/add-member') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
                 <span class="text-[15px] pl-2">Add Member</span>
             </button>
-            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/subscriptions') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
+            <a href="/owner/subscriptions" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/subscriptions') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
                 <span class="text-[15px] pl-2">Subscriptions</span>
-            </a>
-            <a href="#" class="flex items-center space-x-3 py-2 px-4 {{ request()->is('quick-access/payment-setting') ? 'bg-gray-100 text-gray-800 font-medium' : 'text-gray-600 hover:bg-gray-100' }} rounded-lg">
-                <span class="text-[15px] pl-2">Payment Setting</span>
             </a>
             </div>
             </li>

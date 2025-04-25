@@ -1,16 +1,15 @@
 <?php
 
-use App\Http\Controllers\AdminOwnersController;
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\admin\AdminOwnersController;
+use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\auth\EmailVerifyController;
+use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\EmailVerifyController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\MemberPayment;
-use App\Http\Controllers\OwnerController;
-use App\Http\Controllers\PlatformPaymentController;
+use App\Http\Controllers\owner\AttendanceController;
+use App\Http\Controllers\owner\MemberController;
+use App\Http\Controllers\owner\MemberPayment;
+use App\Http\Controllers\payment\PlatformPaymentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
