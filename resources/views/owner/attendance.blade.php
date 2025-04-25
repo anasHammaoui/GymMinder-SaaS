@@ -116,15 +116,7 @@
                 </td>
                 <td class="py-3 px-4">
                   {{-- show calender --}}
-                      <button data-id="{{ $member->id }}" class="bg-[#494949] showCalender cursor-pointer text-white text-xs px-4 py-1.5 rounded-md">Details</button>
-                  
-                    <button
-                      class="bg-[#DA4343] openModalBtnUpdate cursor-pointer text-white text-xs px-4 py-1.5 rounded-md mr-2"
-                      {{-- data-name="{{ $member->name }}" 
-                      data-email="{{ $member->email }}"  
-                      data-plan="{{ $member->plan }}"
-                      data-phone="{{ $member->mobile_number }}" --}}
-                      >Edit</button>
+                      <button data-id="{{ $member->id }}" class="bg-[#1F66AC] showCalender cursor-pointer text-white text-xs px-4 py-1.5 rounded-md">Details</button>
                 </td>
             </tr>
               @endforeach

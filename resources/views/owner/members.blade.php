@@ -137,6 +137,7 @@
                       data-email="{{ $member->email }}"  
                       data-plan="{{ $member->plan }}"
                       data-phone="{{ $member->mobile_number }}"
+                      data-id="{{ $member->id }}"
                       >Edit</button>
                     <form method="POST" action="{{ route('deleteMember', $member->id) }}" onsubmit="return confirm('Are you sure you want to delete this member?');" style="display:inline;">
                       @csrf
@@ -210,7 +211,7 @@
       </button>
     </div>
     
-    <form id="userForm" action="{{ route("updateMember",$member -> id) }}" enctype="multipart/form-data" method="POST" class="p-6">
+    <form id="userForm"  enctype="multipart/form-data" method="POST" class="p-6">
       @method('PUT')
       @csrf
       <!-- Name Field -->
@@ -364,13 +365,14 @@
       // dataset
 
       btn.addEventListener('click', () => {
-      const { name, email, plan, phone } = btn.dataset;
+      const { name, email, plan, phone,id } = btn.dataset;
 
                   // modal values
     document.getElementById('nameUpdate').value = name;
     document.getElementById('emailUpdate').value = email;
     document.getElementById('planUpdate').value = plan;
     document.getElementById('mobile_numberUpdate').value = phone;
+    document.getElementById('userForm').action = `{{ route('updateMember', '') }}/${id}`;
       console.log(name, email)
       modalOverlayUpdate.classList.remove('hidden');
     });
