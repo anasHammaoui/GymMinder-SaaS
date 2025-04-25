@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Member;
 use App\Models\MemberPayment;
+use App\Models\PlatformPayment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,20 +62,36 @@ class dashboardController extends Controller
        } elseif($user === "admin"){
         $owners = User::where("role","owner")->count();
         $activeOwners = User::where("role","owner")-> where("is_active",true)->count();
+        $monthlyRevenue = (PlatformPayment::count()) * 20;
         // Get registration per day for the current and last month
         $registrationPerMonth = collect(['thisMonth' => now()->month, 'lastMonth' => now()->subMonth()->month])
             ->mapWithKeys(function ($month, $key) {
-                $registrations = User::where("role","owner")->selectRaw('DAY(created_at) as day, COUNT(*) as count')
-                    ->whereMonth('created_at', $month)
-                    ->groupBy('day')
-                    ->orderBy('day')
-                    ->pluck('count', 'day')
-                    ->toArray();
+            $registrations = User::where("role", "owner")->selectRaw('DAY(created_at) as day, COUNT(*) as count')
+                ->whereMonth('created_at', $month)
+                ->groupBy('day')
+                ->orderBy('day')
+                ->pluck('count', 'day')
+                ->toArray();
 
-                return [$key => array_replace(array_fill(1, 30, 0), $registrations)];
+            return [$key => array_replace(array_fill(1, 30, 0), $registrations)];
             })
             ->toArray();
-        return view("admin.dashboard",compact(["owners","activeOwners","registrationPerMonth"])) -> with("page","Dashboard");
+
+        // Calculate revenue per month by counting rows and multiplying by 20
+        $revenuePerMonth = PlatformPayment::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('total', 'month')
+            ->map(function ($count) {
+            return $count * 20;
+            })
+            ->toArray();
+
+        // Ensure all months are present in the data
+        $revenuePerMonth = collect(range(1, 12))->mapWithKeys(function ($month) use ($revenuePerMonth) {
+            return [$month => $revenuePerMonth[$month] ?? 0];
+        })->toArray();
+        return view("admin.dashboard",compact(["owners","activeOwners","registrationPerMonth","monthlyRevenue","revenuePerMonth"])) -> with("page","Dashboard");
        }
        return redirect("/unauthorized");
     }

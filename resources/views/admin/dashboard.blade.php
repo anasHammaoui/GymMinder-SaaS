@@ -38,7 +38,7 @@
         <div class="bg-[#E5ECF6] p-6 rounded-xl ">
             <h3 class="text-sm font-medium text-gray-500 mb-4">Monthly Revenue</h3>
             <div class="flex items-baseline justify-between">
-                <span class="text-3xl font-bold">0$</span>
+                <span class="text-3xl font-bold">{{ $monthlyRevenue }}$</span>
             </div>
         </div>
 
@@ -138,6 +138,50 @@
         }
     });
 
+    // Revenue Chart
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    const revenueData = @json($revenuePerMonth);
+    const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
+    new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(revenueData).map(month => months[month - 1]),
+            datasets: [
+                {
+                    label: 'Revenue',
+                    data: Object.values(revenueData),
+                    backgroundColor: 'rgba(96, 165, 250, 0.5)',
+                    borderColor: '#60A5FA',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        stepSize: 500
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
 </script>
 @endsection
