@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Middleware\OwnerMiddleware;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             "auth" => AuthMiddleware::class,
             'guest'=> GuestMiddleware::class,
             'owner' => OwnerMiddleware::class,
+            'admin' => AdminMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

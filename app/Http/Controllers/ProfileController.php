@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 
-class OwnerProfileController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display the profile settings page.
@@ -16,10 +16,17 @@ class OwnerProfileController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            return view("owner.profile", [
-                "page" => "Profile",
-                "user" => $user,
-            ]);
+            if ($user -> role === "owner"){
+                return view("owner.profile", [
+                    "page" => "Profile",
+                    "user" => $user,
+                ]);
+            } elseif($user -> role=== "admin"){
+                return view("admin.profile", [
+                    "page" => "Profile",
+                    "user" => $user,
+                ]);
+            }
         }
 
         return redirect()->route('login');
