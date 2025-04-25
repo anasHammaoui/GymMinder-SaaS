@@ -1,4 +1,4 @@
-@extends('layouts.ownerLayout')
+@extends('layouts.adminLayout')
 @section('content')
 
 <!-- Main Content -->
