@@ -77,7 +77,7 @@
                         <th class="py-3 px-4 font-normal">Gym Owner</th>
                         <th class="py-3 px-4 font-normal">Business Name</th>
                         <th class="py-3 px-4 font-normal">Registration Date</th>
-                        <th class="py-3 px-4 font-normal">Last Payment Date</th>
+                        <th class="py-3 px-4 font-normal">Payment Date</th>
                         <th class="py-3 px-4 font-normal">Account Status</th>
                         <th class="py-3 px-4 font-normal">Actions</th>
                     </tr>
@@ -98,7 +98,7 @@
                         </td>
                         <td class="py-3 px-4 text-sm">{{ $owner->business_name ?'$owner->business_name': 'Not Yet'  }}</td>
                         <td class="py-3 px-4 text-sm">{{ $owner->created_at->format('M j, Y') }}</td>
-                        <td class="py-3 px-4 text-sm">Not Yet</td>
+                        <td class="py-3 px-4 text-sm">{{ $owner->payment ? $owner->payment->paymentDate : 'not yet' }}</td>
                         <td class="py-3 px-4">
                             <div class="flex items-center space-x-2">
                                 <span class="w-2 h-2 rounded-full {{ $owner->is_active ? 'bg-green-500' : 'bg-red-500' }}"></span>
