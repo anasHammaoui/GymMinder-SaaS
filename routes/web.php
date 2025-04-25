@@ -71,8 +71,12 @@ Route::middleware(["auth","owner"]) -> group(function (){
 });
 // owner profile routes
 Route::resource('profile', ProfileController::class)->middleware('auth')->names('profile');
-// owner subscriptions
+// *********************owner payment
 Route::get('/owner/subscriptions', [PlatformPaymentController::class, 'index'])-> middleware(['auth', 'owner'])->name("subscriptions");
+Route::post('/checkout', [PlatformPaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/success',[PlatformPaymentController::class, "success"])->name('payment.success');
+Route::get('/cancel',[PlatformPaymentController::class, "cancel"])->name('payment.cancel');
+        
 // website admin
 Route::middleware(["auth","admin"])-> group(function (){
 Route::get("admin/owners",[AdminOwnersController::class,"index"]) -> name("admin.owners");
