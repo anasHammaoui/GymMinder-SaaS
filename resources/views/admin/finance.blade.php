@@ -84,16 +84,6 @@
                 </a>
             </div>
             <div>
-            <div class="relative">
-                <form class="relative">
-                <input type="text" name="query" placeholder="Search" class="border pl-7 border-gray-300 rounded-md px-3 py-1.5 pr-8 w-56 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400" />
-                <button type="submit" class="absolute inset-y-0 left-2 flex items-center pr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
-                </form>
-            </div>
             </div>
         </div>
 

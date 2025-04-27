@@ -25,7 +25,7 @@
     <div class="container mx-auto px-4 md:px-12 py-4">
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="text-gray-500 pb-8">
-                <a href="{{ route('profile.index') }}" class=" text-blue-500 hover:underline">Profile</a> / 
+                <a href="{{ route('profile.index') }}" class="text-blue-500 hover:underline">Profile</a> / 
                 <a href="{{ route('subscriptions') }}" class="text-blue-500 font-semibold hover:underline">Subscriptions</a>
             </div>
             @if (session('success'))
@@ -48,41 +48,38 @@
                 </div>
             @endif
             <div class="border border-gray-300 rounded-lg p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <div class="mb-4 md:mb-0">
                         <h2 class="text-xl font-semibold">Plan: GymMinder</h2>
                         <p class="text-gray-500">Take your Business to the next level with GymMinder.</p>
                     </div>
-                    <div class="text-right">
+                    <div class="text-left md:text-right">
                         <p class="text-2xl font-bold text-blue-600">$20 one-time</p>
                         <p class="text-sm text-gray-400">One-time payment. No recurring charges.</p>
                         <p class="text-sm text-gray-500 mt-1">Includes lifetime access to all features and priority support.</p>
                     </div>
                 </div>
 
-            @if (Auth::user()->is_active)
-                <div class="text-green-500 font-semibold mb-4">
-                    Your account is active, and your payment is up to date.
-                </div>
-            @else
-                <div class="text-red-500 font-semibold mb-4">
-                    Your account is inactive. Please complete your payment to activate your account.
-                </div>
-                <div class="text-center">
-                    <form method="POST" action="{{ route('payment.checkout') }}">
-                        @csrf
-                        <button 
-                            type="submit" 
-                            class="bg-blue-500 cursor-pointer text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-                        >
-                            Pay Now
-                        </button>
-                    </form>
-                </div>
-
-            @endif
-
-               
+                @if (Auth::user()->is_active)
+                    <div class="text-green-500 font-semibold mb-4">
+                        Your account is active, and your payment is up to date.
+                    </div>
+                @else
+                    <div class="text-red-500 font-semibold mb-4">
+                        Your account is inactive. Please complete your payment to activate your account.
+                    </div>
+                    <div class="text-center">
+                        <form method="POST" action="{{ route('payment.checkout') }}">
+                            @csrf
+                            <button 
+                                type="submit" 
+                                class="bg-blue-500 cursor-pointer text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                            >
+                                Pay Now
+                            </button>
+                        </form>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

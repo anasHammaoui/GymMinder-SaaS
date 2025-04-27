@@ -84,7 +84,7 @@
                 </tr>
             </thead>
             <tbody>
-              @foreach ($members as  $member)
+              @forelse ($members as  $member)
             @php
             $isMarked = $member->attendances()->whereDate('attendance_date', now()->toDateString())->exists();
             @endphp
@@ -119,7 +119,14 @@
                       <button data-id="{{ $member->id }}" class="bg-[#1F66AC] showCalender cursor-pointer text-white text-xs px-4 py-1.5 rounded-md">Details</button>
                 </td>
             </tr>
-              @endforeach
+            @empty
+            <tr>
+              <td colspan="7" class="py-4 px-4 text-center text-gray-500">
+                <h2 class="text-lg font-medium">It's empty</h2>
+                <p class="text-sm">No members found. Add new members to populate the list.</p>
+              </td>
+            </tr>
+              @endforelse
         
             </tbody>
         </table>
