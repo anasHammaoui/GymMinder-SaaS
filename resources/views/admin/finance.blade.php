@@ -23,7 +23,7 @@
     </nav>
 
     <div class="container mx-auto px-4 md:px-12 py-4">
-        <h1 class="text-lg font-medium mb-6">Owners List</h1>
+        <h1 class="text-lg font-medium mb-6">Financial Reports</h1>
         {{-- Success Messages --}}
         @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -143,9 +143,49 @@
         </div>
 
         <!-- Pagination -->
-        {{-- <div class="flex justify-end mt-4">
-            {{ $financialReports->links() }}
-        </div> --}}
+         
+    @if ($owners->hasPages())
+    <div class="flex justify-end mt-6 space-x-1">
+        {{-- Previous Page Link --}}
+        @if ($owners->onFirstPage())
+            <button class="p-1.5  rounded text-gray-300 cursor-not-allowed" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+        @else
+            <a href="{{ $owners->previousPageUrl() }}" class="p-1.5  rounded hover:bg-gray-100 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </a>
+        @endif
+
+        {{-- Pagination Elements --}}
+        @foreach ($owners->getUrlRange(1, $owners->lastPage()) as $page => $url)
+            @if ($page == $owners->currentPage())
+                <span class="px-3 py-1.5  rounded bg-gray-700 text-white">{{ $page }}</span>
+            @else
+                <a href="{{ $url }}" class="px-3 py-1.5  rounded hover:bg-gray-100">{{ $page }}</a>
+            @endif
+        @endforeach
+
+        {{-- Next Page Link --}}
+        @if ($owners->hasMorePages())
+            <a href="{{ $owners->nextPageUrl() }}" class="p-1.5  rounded hover:bg-gray-100 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        @else
+            <button class="p-1.5  rounded text-gray-300 cursor-not-allowed" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        @endif
+    </div>
+@endif
     </div>
 </div>
 @endsection
