@@ -77,7 +77,7 @@
                         <th class="py-3 px-4 font-normal">Gym Owner</th>
                         <th class="py-3 px-4 font-normal">Business Name</th>
                         <th class="py-3 px-4 font-normal">Registration Date</th>
-                        <th class="py-3 px-4 font-normal">Last Payment Date</th>
+                        <th class="py-3 px-4 font-normal">Payment Date</th>
                         <th class="py-3 px-4 font-normal">Account Status</th>
                         <th class="py-3 px-4 font-normal">Actions</th>
                     </tr>
@@ -98,7 +98,7 @@
                         </td>
                         <td class="py-3 px-4 text-sm">{{ $owner->business_name ?'$owner->business_name': 'Not Yet'  }}</td>
                         <td class="py-3 px-4 text-sm">{{ $owner->created_at->format('M j, Y') }}</td>
-                        <td class="py-3 px-4 text-sm">Not Yet</td>
+                        <td class="py-3 px-4 text-sm">{{ $owner->payment ? $owner->payment->paymentDate : 'not yet' }}</td>
                         <td class="py-3 px-4">
                             <div class="flex items-center space-x-2">
                                 <span class="w-2 h-2 rounded-full {{ $owner->is_active ? 'bg-green-500' : 'bg-red-500' }}"></span>
@@ -121,7 +121,49 @@
         </div>
     </div>
 </div>
+    
+@if ($owners->hasPages())
+<div class="flex justify-end mt-6 space-x-1">
+    {{-- Previous Page Link --}}
+    @if ($owners->onFirstPage())
+        <button class="p-1.5  rounded text-gray-300 cursor-not-allowed" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+    @else
+        <a href="{{ $owners->previousPageUrl() }}" class="p-1.5  rounded hover:bg-gray-100 text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+    @endif
 
+    {{-- Pagination Elements --}}
+    @foreach ($owners->getUrlRange(1, $owners->lastPage()) as $page => $url)
+        @if ($page == $owners->currentPage())
+            <span class="px-3 py-1.5  rounded bg-gray-700 text-white">{{ $page }}</span>
+        @else
+            <a href="{{ $url }}" class="px-3 py-1.5  rounded hover:bg-gray-100">{{ $page }}</a>
+        @endif
+    @endforeach
+
+    {{-- Next Page Link --}}
+    @if ($owners->hasMorePages())
+        <a href="{{ $owners->nextPageUrl() }}" class="p-1.5  rounded hover:bg-gray-100 text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </a>
+    @else
+        <button class="p-1.5  rounded text-gray-300 cursor-not-allowed" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    @endif
+</div>
+@endif
 @endsection
 @section("scripts")
 <script>

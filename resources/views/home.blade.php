@@ -328,11 +328,11 @@
                     <ul class="space-y-4">
                         <li class="flex items-center">
                             <span class="text-blue-500 mr-3">•</span>
-                            <p><span class="font-bold">One-Time Subscription </span>– Get full access to all features for just $20/month</p>
+                            <p><span class="font-bold">One-Time Subscription </span>– Get full access to all features for just $20 for a lifetime</p>
                         </li>
                         <li class="flex items-center">
                             <span class="text-blue-500 mr-3">•</span>
-                            <p class="font-bold">No hidden fees. Cancel anytime</p>
+                            <p class="font-bold">No hidden fees. Pay once and enjoy forever</p>
                         </li>
                     </ul>
                     

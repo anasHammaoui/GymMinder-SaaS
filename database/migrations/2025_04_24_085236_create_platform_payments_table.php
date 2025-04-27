@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table -> foreignId("user_id") -> constrained("users");
             $table -> date("paymentDate");
+            $table -> integer("amount");
             $table -> string("paymentMethod");
             $table->timestamps();
         });

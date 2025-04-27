@@ -63,7 +63,7 @@
   - Manuel vs automatique
   - Historique des factures
   - Paiement manuel
-  - Activation/désactivation paiements automatiques
+  - One time payment
 
 ### 7. Tableau de Bord Admin
 **Statistiques Globales** :

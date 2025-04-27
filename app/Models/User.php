@@ -61,6 +61,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this -> hasMany(Member::class);
     }
     public function payment(){
-        return $this -> hasMany(PlatformPayment::class);
+        return $this -> hasOne(PlatformPayment::class);
     }
 }
