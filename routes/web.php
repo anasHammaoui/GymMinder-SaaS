@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminOwnersController;
+use App\Http\Controllers\admin\FinanceController;
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\auth\EmailVerifyController;
 use App\Http\Controllers\auth\ResetPasswordController;
@@ -72,9 +73,9 @@ Route::middleware(["auth","owner"]) -> group(function (){
 Route::resource('profile', ProfileController::class)->middleware('auth')->names('profile');
 // *********************owner payment
 Route::get('/owner/subscriptions', [PlatformPaymentController::class, 'index'])-> middleware(['auth', 'owner'])->name("subscriptions");
-Route::post('/checkout', [PlatformPaymentController::class, 'checkout'])->name('payment.checkout');
-Route::get('/success',[PlatformPaymentController::class, "success"])->name('payment.success');
-Route::get('/cancel',[PlatformPaymentController::class, "cancel"])->name('payment.cancel');
+Route::post('/checkout', [PlatformPaymentController::class, 'checkout'])->middleware(['auth', 'owner'])->name('payment.checkout');
+Route::get('/success',[PlatformPaymentController::class, "success"])->middleware(['auth', 'owner'])->name('payment.success');
+Route::get('/cancel',[PlatformPaymentController::class, "cancel"])->middleware(['auth', 'owner'])->name('payment.cancel');
         
 // website admin
 Route::middleware(["auth","admin"])-> group(function (){
@@ -82,3 +83,10 @@ Route::get("admin/owners",[AdminOwnersController::class,"index"]) -> name("admin
 Route::put("admin/owners/{id}",[AdminOwnersController::class,"ownerStatus"]) -> name("admin.status");
 Route::get("admin/owners/search", [AdminOwnersController::class, "search"])->name('searchOwners');
 });
+
+// finance rapport
+
+Route::middleware(["auth","admin"])-> group(function (){
+   Route::get("admin/finance",[FinanceController::class,'index']) -> name("admin.finance");
+});
+    
