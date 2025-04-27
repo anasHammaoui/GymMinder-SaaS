@@ -64,7 +64,8 @@ class PlatformPaymentController extends Controller
                 PlatformPayment::create([
                     'user_id' => $user->id,
                     'paymentMethod' => 'stripe',
-                    'paymentDate' => now()
+                    'paymentDate' => now(),
+                    'amount' => 20
                 ]);
                 $user->notify(new PaymentNotification());
                 $admins = User::where('role', 'admin')->get();

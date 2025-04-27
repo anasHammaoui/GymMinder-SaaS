@@ -8,6 +8,7 @@ class PlatformPayment extends Model
 {
     protected $fillable = [
         'user_id',
+        "amount",
         'paymentDate',
         'paymentMethod',
     ];
