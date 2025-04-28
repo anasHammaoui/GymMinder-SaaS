@@ -94,7 +94,7 @@
                     <tr class="text-left text-sm text-gray-500 border-b border-gray-300">
                         <th class="py-3 px-4 font-normal">Owner Id</th>
                         <th class="py-3 px-4 font-normal">Gym Owner</th>
-                        <th class="py-3 px-4 font-normal">Business Name</th>
+                        <th class="py-3 px-4 font-normal">Email</th>
                         <th class="py-3 px-4 font-normal">Amount</th>
                         <th class="py-3 px-4 font-normal">Payment Date</th>
                         <th class="py-3 px-4 font-normal">Status</th>
@@ -110,7 +110,7 @@
                             </div>
                             <span class="text-sm">{{ $owner -> name }}</span>
                         </td>
-                        <td class="py-3 px-4 text-sm">{{ $owner -> business_name ? $owner -> business_name :  "Not Yet" }}</td>
+                        <td class="py-3 px-4 text-sm">{{ $owner -> email }}</td>
                         <td class="py-3 px-4 text-sm">{{ $owner -> payment ? $owner -> payment -> amount  .'$': 'Pending'}}</td>
                         <td class="py-3 px-4 text-sm">{{ $owner -> payment ? $owner -> payment -> paymentDate: 'Pending'}}</td>
                         <td class="py-3 px-4">
