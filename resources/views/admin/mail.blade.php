@@ -4,28 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Subscription Notification</title>
-    @vite('resources/css/app.css')
+    <style>
+        body {
+            background-color: #f7fafc;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4299e1;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 24px;
+            color: #4a5568;
+        }
+        .content p {
+            margin-bottom: 16px;
+        }
+        .content ul {
+            margin-bottom: 16px;
+            padding-left: 20px;
+        }
+        .content ul li {
+            margin-bottom: 8px;
+        }
+        .button-container {
+            text-align: center;
+        }
+        .button-container a {
+            display: inline-block;
+            background-color: #4299e1;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .button-container a:hover {
+            background-color: #3182ce;
+        }
+        .footer {
+            background-color: #edf2f7;
+            text-align: center;
+            padding: 16px;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-    <div class="max-w-lg mx-auto mt-10 bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="bg-blue-500 text-white text-center py-6">
-            <h1 class="text-2xl font-bold">New Subscription Alert!</h1>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>New Subscription Alert!</h1>
         </div>
-        <div class="p-6 text-gray-700">
-            <p class="mb-4">Dear Admin,</p>
-            <p class="mb-4">We are pleased to inform you that a new subscription has been successfully activated on Gym Minder.</p>
-            <p class="mb-4">Here are the details of the user:</p>
-            <ul class="mb-4">
+        <div class="content">
+            <p>Dear Admin,</p>
+            <p>We are pleased to inform you that a new subscription has been successfully activated on Gym Minder.</p>
+            <p>Here are the details of the user:</p>
+            <ul>
                 <li><strong>Name:</strong> {{ $user->name }}</li>
                 <li><strong>Email:</strong> {{ $user->email }}</li>
             </ul>
-            <p class="mb-4">You can view more details and manage this subscription in the admin dashboard:</p>
-            <div class="text-center">
-                <a href="{{ url('/admin/owners') }}" class="inline-block bg-blue-500 text-white px-6 py-2 rounded-lg text-lg font-medium hover:bg-blue-600">Go to Admin Dashboard</a>
+            <p>You can view more details and manage this subscription in the admin dashboard:</p>
+            <div class="button-container">
+                <a href="{{ url('/admin/owners') }}">Go to Admin Dashboard</a>
             </div>
-            <p class="mt-4">Best regards,<br>The Gym Minder System</p>
+            <p>Best regards,<br>The Gym Minder System</p>
         </div>
-        <div class="bg-gray-100 text-center py-4 text-sm text-gray-500">
+        <div class="footer">
             <p>&copy; {{ date('Y') }} Gym Minder. All rights reserved.</p>
         </div>
     </div>

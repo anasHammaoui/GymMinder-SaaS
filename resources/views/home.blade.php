@@ -109,14 +109,14 @@
         </div>
     </div>
     <!-- Hero Section -->
-    <section id="home" class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4  md:px-8 lg:px-[170px] py-16">
+    <section id="home" class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4 md:px-8 lg:px-[170px] py-16">
         <div data-aos="fade-right" class="max-w-xl text-white">
             <h1 class="text-4xl md:text-5xl font-bold mb-2 outfit">Effortless Gym <br>Management with <span class="text-blue-500">GYM <br>MINDER!</span></h1>
             <p class="mb-8 text-gray-300">Simplify memberships, streamline operations, payments, and <br>grow your gym with ease.</p>
             <a href="/register" class="bg-blue-500 text-white px-8 py-3 rounded-full font-medium shadow hover:bg-blue-600 transition">Get Started Now</a>
         </div>
-        <div data-aos="fade-left class="mt-10 md:mt-0">
-            <img src="{{ asset('assets/images/dashboard.jpg') }}" alt="GymMinder Dashboard" class="w-full max-w-md rounded-lg shadow-lg border border-gray-700">
+        <div data-aos="fade-left" class="mt-10 md:mt-0 w-full max-w-md">
+            <img src="{{ asset('assets/images/dashboard.jpg') }}" alt="GymMinder Dashboard" class="w-full rounded-lg shadow-lg border border-gray-700">
         </div>
     </section>
     <!-- Features Section -->
