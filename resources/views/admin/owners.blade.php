@@ -123,7 +123,7 @@
 </div>
     
 @if ($owners->hasPages())
-<div class="flex justify-end mt-6 space-x-1">
+<div class="flex justify-end mt-6 px-10 space-x-1">
     {{-- Previous Page Link --}}
     @if ($owners->onFirstPage())
         <button class="p-1.5  rounded text-gray-300 cursor-not-allowed" disabled>
